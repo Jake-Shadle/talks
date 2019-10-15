@@ -6,7 +6,7 @@ revealOptions:
   transition: convex
 ---
 
-# Rust, Open Source, Gamedev
+## Rust, Open Source, Gamedev
 
 ----
 
@@ -14,10 +14,34 @@ revealOptions:
 
 ---
 
-# About
+## About
 
 - Game Developer for 12+ years <!-- .element: class="fragment" data-fragment-index="1" -->
-- Edge of Reality ️️️️️️️☠️ <!-- .element: class="fragment" data-fragment-index="2" -->
-- Vigil Games ☠️ (also THQ ☠️) <!-- .element: class="fragment" data-fragment-index="3" -->
-- DICE/Frostbite NOT DEAD! 😄 <!-- .element: class="fragment" data-fragment-index="4" -->
-- Embark Studios 🦀 <!-- .element: class="fragment" data-fragment-index="5" -->
+- Edge of Reality (mid)️ ☠️ <!-- .element: class="fragment" data-fragment-index="2" -->
+- Vigil Games (mid) ☠️ (also THQ ☠️) <!-- .element: class="fragment" data-fragment-index="3" -->
+- DICE/Frostbite (huge) 🖐 <!-- .element: class="fragment" data-fragment-index="4" -->
+- Embark Studios (small, but fierce) 🦀 <!-- .element: class="fragment" data-fragment-index="5" -->
+
+---
+
+## Gamedev And Open Source
+
+![skeptical](https://media.giphy.com/media/cmjCuhwQokW5D2NxMw/giphy.gif)
+
+----
+
+### OS
+
+![windows](windows.png)
+
+----
+
+### IDE
+
+![vs](vs.png)
+
+----
+
+### Toolchain
+
+![vcpp](vcpp.png)
