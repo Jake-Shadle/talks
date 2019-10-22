@@ -24,7 +24,7 @@ revealOptions:
 
 ---
 
-## Typical Gamedev
+## Gamedev 🔺
 
 ![closed](https://media.giphy.com/media/kDwIbnBqKe3D7BSqrt/giphy.gif)
 
@@ -38,56 +38,36 @@ revealOptions:
 - Server*
 - Services*
 
+![diagram](diagram.png)
+
 ----
 
 #### Engine - Closed
 
-- The `std` for gamedevs
-  - Yes, including an in-house ST*L
-- Abstractions on top of platform APIs
-- Middleware integrations
+- Reusable components eg physics, rendering
+- Wrappers on top of platform APIs
 - Probably uses some open source libraries
-  - Probably Zlib
-  - ...modified
-  - ...*n* - 1 month old, where *n* is the age of the studio
+
+![engine](https://media.giphy.com/media/vf5TjQrio0TBK/giphy.gif)
 
 ----
 
 #### Tools - Closed
 
-- Stuff to accelerate and streamline development
 - Predominantly centered around content pipelines
-- Mixture of languages, C++/C#/Python/batch
-- Often wrapping/talking with external software
+- Often mixture of languages, C++/C#/Python etc
 - Almost certainly uses open source software
+
+<img src="https://media.giphy.com/media/U3Nx8EtP7h1p0WFKat/giphy.gif" alt="convert" height="300" width="300">
 
 ----
 
 #### Game - Closed
 
-- Bespoke
-- Often the same thing as the Engine for new studios without external engine
+- Bespoke code specific to a single game
 - Less likely to contain open source libraries
 
-----
-
-#### Server - Closed
-
-- Most MP games use a server authoritative client-server model
-- Stripped down version of the engine and game
-- Probably the only part of the codebase to target Linux
-
-----
-
-#### Services - Closed
-
-- Often developed separately from the game
-  - Matchmaking
-  - Leaderboards
-  - Friends/community/etc
-- Often developed on completely separate tech stack(s) (eg Java/Go/Scala)
-- Greatest overlap between games and other sofware industries
-- Probably(?) contains open source software
+![unique](https://media.giphy.com/media/8FJrkpMf74BlOpntMD/giphy.gif)
 
 ----
 
