@@ -12,8 +12,8 @@ revealOptions:
 
 ### Contents
 
-- Why Rust?
 - Gamedev Overview
+- Why Rust?
 - C++ and Rust Open Source
 
 ---
@@ -32,27 +32,6 @@ revealOptions:
 
 - Opinions based on my experience
 - General view of gamedev, but not total
-
----
-
-## Why Rust?
-
-![crab](https://media.giphy.com/media/T6Wc7n3lVh9lu/giphy.gif)
-
-----
-
-### Rust + Open Source = ♥️
-
-> ... combined with the openness and collaborative nature of the quickly growing ecosystem of and around Rust with crates.io and the tens of thousands of open source crates with a best-in-class package system, cargo, truly makes Rust a [language for the next 40 years](https://www.youtube.com/watch?v=A3AdN7U24iU).
-
-----
-
-#### Stats
-
-- Using ~411 crates in our main Rust project
-- Have [open sourced](https://embark.dev/) 9+ crates so far
-- Have contributed to dozens of crates
-- Helping sponsor and fund several projects/people
 
 ---
 
@@ -105,9 +84,32 @@ revealOptions:
 
 #### Summary
 
-- All games contain or use open source software
+- Most games use open source
+- Most games are built with open source
 - Most games and associated software are closed
-- ...but usage of open source is actually quite low
+
+---
+
+## Why Rust?
+
+![crab](https://media.giphy.com/media/T6Wc7n3lVh9lu/giphy.gif)
+
+----
+
+### Rust + Open Source = ♥️
+
+> ... combined with the openness and collaborative nature of the quickly growing ecosystem of and around Rust with crates.io and the tens of thousands of open source crates with a best-in-class package system, cargo, truly makes Rust a [language for the next 40 years](https://www.youtube.com/watch?v=A3AdN7U24iU).
+
+----
+
+### Part of the Appeal
+
+- Open source is one of Rust's core pillars
+
+- Using ~411 crates in our main Rust project
+- Have [open sourced](https://embark.dev/) 9+ crates so far
+- Have contributed to dozens of crates
+- Helping sponsor and fund several projects/people
 
 ---
 
