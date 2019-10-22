@@ -10,11 +10,15 @@ revealOptions:
 
 ----
 
-![pizza](https://media.giphy.com/media/OAbybHNIrqmqY/giphy.gif)
+### Contents
+
+- Why Rust?
+- Gamedev Overview
+- C++ and Rust Open Source
 
 ---
 
-## About
+### About
 
 - Game Developer for 12+ years
 - Edge of Reality (midd️ling) ☠️
@@ -22,11 +26,39 @@ revealOptions:
 - DICE/Frostbite (huge) 🖐
 - Embark Studios (small, but fierce) 🦀
 
+----
+
+### Disclaimer
+
+- Opinions based on my experience
+- General view of gamedev, but not total
+
 ---
 
-## Gamedev 🔺
+## Why Rust?
 
-![closed](https://media.giphy.com/media/kDwIbnBqKe3D7BSqrt/giphy.gif)
+![crab](https://media.giphy.com/media/T6Wc7n3lVh9lu/giphy.gif)
+
+----
+
+### Rust + Open Source = ♥️
+
+> ... combined with the openness and collaborative nature of the quickly growing ecosystem of and around Rust with crates.io and the tens of thousands of open source crates with a best-in-class package system, cargo, truly makes Rust a [language for the next 40 years](https://www.youtube.com/watch?v=A3AdN7U24iU).
+
+----
+
+#### Stats
+
+- Using ~411 crates in our main Rust project
+- Have [open sourced](https://embark.dev/) 9+ crates so far
+- Have contributed to dozens of crates
+- Helping sponsor and fund several projects/people
+
+---
+
+## Gamedev
+
+![cats](https://media.giphy.com/media/UYqgQdSPZhqI8/giphy.gif)
 
 ----
 
@@ -42,30 +74,30 @@ revealOptions:
 
 ----
 
-#### Engine - Closed
+#### Engine
 
 - Reusable components eg physics, rendering
 - Wrappers on top of platform APIs
-- Probably uses some open source libraries
+- Occasional user of open source eg. compression
 
 ![engine](https://media.giphy.com/media/vf5TjQrio0TBK/giphy.gif)
 
 ----
 
-#### Tools - Closed
+#### Tools
 
 - Predominantly centered around content pipelines
 - Often mixture of languages, C++/C#/Python etc
-- Almost certainly uses open source software
+- Frequent user of open source
 
 <img src="https://media.giphy.com/media/U3Nx8EtP7h1p0WFKat/giphy.gif" alt="convert" height="300" width="300">
 
 ----
 
-#### Game - Closed
+#### Game
 
 - Bespoke code specific to a single game
-- Less likely to contain open source libraries
+- Infrequent user of open source
 
 ![unique](https://media.giphy.com/media/8FJrkpMf74BlOpntMD/giphy.gif)
 
@@ -85,17 +117,44 @@ revealOptions:
 
 ----
 
-### Boring Reasons
+## Boring Reasons
 
 ![bored](https://media.giphy.com/media/NWg7M1VlT101W/giphy.gif)
 
 ----
 
-#### Licensing
+### Licensing
 
-- Companies are paranoid about external code
-- Explicit approvals via manual process
+- Companies are paranoid about external code licenses
 - GPL in your game means everyone has a bad day
+
+----
+
+#### C/C++
+
+- Company dependent process
+- Probably requires explicit approval
+- Usually manual, slow
+
+----
+
+#### Rust
+
+Can specify license requirements in crate metadata...
+
+```toml
+[package]
+name = "cargo-deny"
+repository = "https://github.com/EmbarkStudios/cargo-deny"
+license = "MIT OR Apache-2.0"
+license-file = "LICENSE"
+```
+
+----
+
+#### + cargo-deny
+
+
 
 ----
 
@@ -164,13 +223,13 @@ revealOptions:
 
 ## A Contender Appears
 
-![crab](https://media.giphy.com/media/T6Wc7n3lVh9lu/giphy.gif)
+
 
 ----
 
 ### Not just the language 🦀
 
-> ... combined with the openness and collaborative nature of the quickly growing ecosystem of and around Rust with crates.io and the tens of thousands of open source crates with a best-in-class package system, cargo, truly makes Rust a [language for the next 40 years](https://www.youtube.com/watch?v=A3AdN7U24iU).
+
 
 ---
 
@@ -327,4 +386,8 @@ A linter and a teaching tool
 
 - Rust simplifies using and contributing to OS
 - Open source is a crucial reason to use Rust
-- Gamedev and Rust
+- Gamedev, Rust, and Open Source are a winning combo
+
+-----
+
+![pizza](https://media.giphy.com/media/OAbybHNIrqmqY/giphy.gif)
