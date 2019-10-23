@@ -1,6 +1,7 @@
 ---
 title: Triforce
 theme: black
+highlightTheme: atom-one-dark
 revealOptions:
   history: true
   transition: convex
@@ -14,7 +15,10 @@ revealOptions:
 
 - Gamedev Overview
 - Why Rust?
-- C++ and Rust Open Source
+- Using Open Source
+- Using Hurdles
+- Collaborating On Open Source
+- Collaboration Hurdles
 
 ---
 
@@ -57,6 +61,7 @@ revealOptions:
 
 - Reusable components eg physics, rendering
 - Wrappers on top of platform APIs
+- Middleware integrations
 - Occasional user of open source eg. compression
 
 ![engine](https://media.giphy.com/media/vf5TjQrio0TBK/giphy.gif)
@@ -67,9 +72,10 @@ revealOptions:
 
 - Predominantly centered around content pipelines
 - Often mixture of languages, C++/C#/Python etc
+- Usually **Windows** specific
 - Frequent user of open source
 
-<img src="https://media.giphy.com/media/U3Nx8EtP7h1p0WFKat/giphy.gif" alt="convert" height="300" width="300">
+<img src="pipeline.png" alt="convert" height="300" width="300">
 
 ----
 
@@ -96,59 +102,169 @@ revealOptions:
 
 ----
 
-### Rust + Open Source = ♥️
+### A Word From Our CTO
 
 > ... combined with the openness and collaborative nature of the quickly growing ecosystem of and around Rust with crates.io and the tens of thousands of open source crates with a best-in-class package system, cargo, truly makes Rust a [language for the next 40 years](https://www.youtube.com/watch?v=A3AdN7U24iU).
 
 ----
 
-### Part of the Appeal
+### [Rust + Open Source](https://embark.dev) = ♥️
 
-- Open source is one of Rust's core pillars
-
-- Using ~411 crates in our main Rust project
-- Have [open sourced](https://embark.dev/) 9+ crates so far
-- Have contributed to dozens of crates
-- Helping sponsor and fund several projects/people
-
----
-
-## Why OSS is rarely used
-
-![skeptical](https://media.giphy.com/media/cmjCuhwQokW5D2NxMw/giphy.gif)
+- Easier to use
+- Easier to make open
+- Easier to collaborate
 
 ----
 
-## Boring Reasons
+### Quick Aside
 
-![bored](https://media.giphy.com/media/NWg7M1VlT101W/giphy.gif)
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Telling a programmer there&#39;s already a library to do X is like telling a songwriter there&#39;s already a song about love</p>&mdash; Pete Cordell #NoDealNoWay (@petecordell) <a href="https://twitter.com/petecordell/status/428542622844477441?ref_src=twsrc%5Etfw">January 29, 2014</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Note: Of course programmers want to make stuff, and that's great...but I've also encountered 2 custom in-house scripting languages. Possibly not the best use of engineering effort.
+
+---
+
+## Using Open Source
+
+![gift](https://media.giphy.com/media/kKo2x2QSWMNfW/giphy.gif)
+
+----
+
+### Downloading - C/C++
+
+- Likely vendored into private VCS
+- Often breaks connection with original
+
+![chainsnap](https://media.giphy.com/media/xUPJPG4ij7qcqnhnsQ/giphy.gif)
+
+Note: Vendoring automatically makes upstream contributions less likely.
+
+----
+
+### Downloading - 🦀
+
+```toml
+package]
+name = "meetup"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+structopt = "0.3.3" # <- This line
+```
+
+![output](crate-download.png)
+
+----
+
+### Also has Vendoring 😉
+
+![output](crate-vendoring.png)
+
+Note: Valid use case in some instances, but by no means the default.
+
+----
+
+### Building - C/C++
+
+- Port it to your build system
+- Fix unnecessary Linuxisms 🐧
+- Fix MSVC warnings
+- Fixup syscalls for proprietary platforms*
+
+Note: C/C++ OS libraries tend to be built and maintained by Linux programmers, which inevitably leads to problems on Windows/MSVC.
+
+----
+
+### Building - 🦀
+
+```toml
+package]
+name = "meetup"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+structopt = "0.3.3" # <- This line
+```
+
+![output](crate-building.png)
+
+----
+
+### Integrating - C/C++
+
+- C++ is a monstrously complicated language
+- Most codebases have their own `std` library
+- Wrap to limit catastrophic usage
+
+<img src="https://media.giphy.com/media/SiKqz6IPADLF6IvONF/giphy.gif" alt="complicated" height="300" width="300">
+
+----
+
+### Integrating - 🦀
+
+- "Small" consistent language
+- Traits: `From`, `Into`, `AsRef`, `Debug`...
+- Code generation, macros, strong `std`...
+
+----
+
+```rust
+use structopt::StructOpt;
+
+#[derive(Debug, StructOpt)]
+struct Opts {
+    /// The name to say hello to
+    #[structopt(long, short, default_value = "world")]
+    name: String,
+}
+
+fn main() {
+    let args = Opts::from_args();
+    println!("Hello, {}!", args.name);
+}
+```
+
+![hello](hello.png)
+
+---
+
+## Hurdles for Using
+
+![doggo](https://media.giphy.com/media/3oEduOdBgjm7Yuyvmw/giphy.gif)
 
 ----
 
 ### Licensing
 
-- Companies are paranoid about external code licenses
+- External code = suspicious
 - GPL in your game means everyone has a bad day
 
+![hardno](https://media.giphy.com/media/3o85xxUdeHWUY0G0IE/giphy.gif)
+
 ----
 
-#### C/C++
+#### Licensing - C/C++
 
 - Company dependent process
-- Probably requires explicit approval
 - Usually manual, slow
+- Lack of trust
+
+Note: It is generally so painful to integrate a C/C++ library that a manual approval process is less of a burden than one would assume.
 
 ----
 
-#### Rust
+#### Licensing - 🦀
 
 Can specify license requirements in crate metadata...
 
 ```toml
 [package]
-name = "cargo-deny"
-repository = "https://github.com/EmbarkStudios/cargo-deny"
-license = "MIT OR Apache-2.0"
+name = "meetup"
+version = "0.1.0"
+edition = "2018"
+license = "MIT OR BSD-2-Clause"
 license-file = "LICENSE"
 ```
 
@@ -156,181 +272,168 @@ license-file = "LICENSE"
 
 #### + cargo-deny
 
+- Our dependency gardening tool, [open source](https://github.com/EmbarkStudios/cargo-deny)
+- Ensures a crate's license requirements
+- Keeps certain crates out of your graph
+- Detects duplicates
 
+![mk](https://media.giphy.com/media/rLJJkk3cymTeg/giphy.gif)
 
 ----
 
-#### Finance
+```toml
+[licenses]
+unlicensed = "deny"
+allow = [
+    #"Apache-2.0",
+    #"BSD-2-Clause",
+    #"MIT",
+]
+```
 
-- Easier to spend money than to use an open source library/product
-- Like invoices, a [lot](https://www.independent.co.uk/news/world/americas/google-facebook-scam-fake-invoice-wire-fraud-guilty-a8840071.html)
-- Papertrail, Agreements, etc
+![license](deny-license.png)
+
+----
+
+### Finance
+
+- Easier to buy/license than use open source library/product
+- Papertrail, Agreements, Legal, etc
+
+----
+
+### Open Problem in Open Source
+
+- Many options
+- Inconsistent
+- **Hard**
+
+![sponsorship](sponsorship.png)
+
+Note: Monetary support is required for the long term growth and stability of the Rust ecosystem, and we want to work with other companies and individuals to figure out how best to do that.
+
+----
+
+### [Earlier today...](https://twitter.com/EmbarkStudios/status/1186964782844469248)
+
+![blender](blender.png)
 
 ---
 
-### Fun Reasons 🎉
+## Open Collaboration
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Telling a programmer there&#39;s already a library to do X is like telling a songwriter there&#39;s already a song about love</p>&mdash; Pete Cordell #NoDealNoWay (@petecordell) <a href="https://twitter.com/petecordell/status/428542622844477441?ref_src=twsrc%5Etfw">January 29, 2014</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
----
-
-### C/C++ Reasons
-
-![annoyed](https://media.giphy.com/media/9mWg0JLV4NwM8/giphy.gif)
+![teamwork](https://media.giphy.com/media/3rgXBrLlRs4ZlpnVDO/giphy.gif)
 
 ----
 
-#### Getting It 
+### Portability - C/C++
 
-- Likely vendored, often a one-way transform
-- It probably contains stuff you don't want
-- Hook it into your (proprietary!?) build system
+- At least 3 major toolchains
+- Updating C++ revisions is..controversial
+- Countless build systems
 
-----
+![chaos](https://media.giphy.com/media/137TKgM3d2XQjK/giphy.gif)
 
-#### Building It 🔨
-
-- Fixup unnecessary Linuxisms (and not upstream)
-- Fixup MSVC warnings/errors (and not upstream)
-- Fixup syscalls for proprietary platforms (and not upstream, because you'll get sued)
+Note: Arbitrarily limit supported targets, single header libraries, "best/no effort" support for Windows, which is a problem for gamedevs who primarily work on Windows.
 
 ----
 
-#### Integrating It
+### Portability - 🦀
 
-- May require hooking your custom allocator
-- May require hooking your logging system
-- Wrap it to reduce chance of catastrophic usage
+- One Build System to Build Them All*
+- One Compiler to Compile Them All*
+- cargo -> rustc -> linker -> success*
 
-----
+![onering](https://media.giphy.com/media/ie8I61aEWnJCM/giphy.gif)
 
-#### Lack of Interoperability
-
-- C++ is a huge language
-- Mismatch of principles between library and target codebase
-- C++ libraries often rely on the std lib
-  - Which is a problem when your codebase doesn't
-- Multiple compilers
+Note: I hope Rust never gets a separate compiler/cargo/etc. The reason for all the asterisks is actually because of cargo's ability to build C/C++ code from a build.rs in a crate, which brings in many of the same problems as if Rust wasn't invovlved. But it's still easier to use a C library via Rust than in C/C++.
 
 ----
 
-#### Distrust 🤔
+### Code Quality - C/C++
 
-- Every external dependency is a potential landmine due to lack of safety guarantees
-- Most libraries are not designed with real-time performance constraints in mind
-- Data race free? `¯\_(ツ)_/¯`
-- External code is seen as inherently unreliable long term
+- Wildy varying opinions due to size of C++
+- "Safe"? "Thread safe"? `¯\_(ツ)_/¯`
+- Uneven tooling
 
----
-
-## A Contender Appears
-
-
+Note: Extremely hard to reason about changes due to complexity of language and unsafety. Most game companies have some kind of "code guidelines" wiki page where style, performance, safety, readability, etc concerns are laid out in a document that programmers need to read and internalize.
 
 ----
 
-### Not just the language 🦀
+### Code Quality - 🦀
 
-
-
----
-
-### On Getting & Building 🔨
+- Language Guarantees
+- Reduce friction
+- Tools Are Your Friend
 
 ----
 
-#### The Good
+#### Language Guarantees
 
-- Solid std lib
-- Single (kind of) cross compiling toolchain
-- Unified build system, including build.rs
-- Procedural macros are fantastic
-- Cargo makes using dependencies easy
-  - Easier to build and use a C library via Rust
+PR#1 - Move print to another thread, way faster
 
-----
-
-#### The Bad
-
-- ...almost **too** easy
-  - Unusable licenses
-  - Some crates you just don't want (OpenSSL!)
-  - Duplicates
-  - Default features
-- C/C++ code usually breaks cross compiling
-- Procedural macros are sloooooow to compile
-
-----
-
-#### The Ugly
-
-- build.rs & procedural macros are exploit magnets
-- build.rs often relies on system dependencies
-  - python
-  - cmake
-  - make
-  - perl
+```diff
+diff --git a/src/main.rs b/src/main.rs
+index 217cadc..daf4af5 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -9,5 +9,8 @@ struct Opts {
+ 
+ fn main() {
+     let args = Opts::from_args();
+-    println!("Hello, {}!", args.name);
++
++    std::thread::spawn(|| {
++        println!("Hello, {}!", args.name);
++    });
+ }
+```
 
 ----
 
-#### But tools help!
+#### Also broken 💩
 
-- Cargo gives a consistent cross-platform base
-- [Watt](https://docs.rs/watt/) shows potential future for proc macros
-  - WASM
-  - Sandboxed
-  - Fast
-- Something similar for build.rs would be fantastic
-
----
-
-### Interoperability
-
-![chain](https://media.giphy.com/media/MFabj1E9mgUsqwVWHu/giphy.gif)
+![safety](safetyfirst.png)
 
 ----
 
-#### Simpler
+#### Tests
 
-- Rust skews more towards C than C++
-- macros are part of the language
-- proc macros > code generation
+```rust
+fn make_awesome(s: &str) -> String {
+    format!("{}!", s)
+}
 
-----
+#[test]
+fn test_the_thing() {
+    assert_eq!(make_awesome("input"), "input!");
+}
+```
 
-#### Traits
+![test](test.png)
 
-- Powerful mechanism for communication
-- `From`, `Into`, `AsRef`, `Debug`, `Default`, etc
-- Separation of data and logic
-
-----
-
-#### Guarantees
-
-- Clear, validated ownership
-- Safety issues can only arise from `unsafe`
-- No data races
-
----
-
-## Collaboration Is Hard
-
-![gift](https://media.giphy.com/media/NQ3uhmwRUSTsI/giphy.gif)
+Note: Barebones, but built-in and effective.
 
 ----
 
-### It's a Two-Way Street
+#### Other Friction Reducers
 
-- Using open source is the easy part
-- Open sourcing your own stuff is hard
-- Contributing to others' code is even harder
+- Docs, with compile checks!
+- [docs.rs](https://docs.rs)!
+- Benchmarks
+- Too many awesome things to talk about
+
+![awesome](https://media.giphy.com/media/fDzM81OYrNjJC/giphy.gif)
+
+Note: Property based testing! Criterion! Fuzzers!
 
 ----
 
-### [rustfmt](https://github.com/rust-lang/rustfmt)
+#### [rustfmt](https://github.com/rust-lang/rustfmt)
 
-Remove pointless conflict over style
+Because arguing about code style is lame.
+
+![rusfmt](rustfmt.png)
 
 ```yaml
 - run: rustup component add rustfmt
@@ -343,9 +446,11 @@ Remove pointless conflict over style
 
 ----
 
-### [clippy](https://github.com/rust-lang/rust-clippy)
+#### [clippy](https://github.com/rust-lang/rust-clippy)
 
 A linter and a teaching tool
+
+![clippy](clippy.png)
 
 ```yaml
 - run: rustup component add clippy
@@ -360,36 +465,75 @@ A linter and a teaching tool
 
 #### [cargo-deny](https://github.com/EmbarkStudios/cargo-deny)
 
-- Our dependency gardening tool, open source
-- Ensures a crate's license requirements
-- Keeps certain crates out of your graph
-- Detects duplicates
+We tend to avoid OpenSSL when possible.
 
-![mk](https://media.giphy.com/media/rLJJkk3cymTeg/giphy.gif)
+![openssl](openssl.png)
+
+```toml
+[bans]
+multiple-versions = "deny"
+deny = [
+    { name = "openssl" },
+]
+```
+
+---
+
+## Hurdles for Collaboration
+
+![headdesk](https://media.giphy.com/media/9mWg0JLV4NwM8/giphy.gif)
 
 ----
 
-```yaml
-- name: install cargo-deny
-  uses: actions-rs/cargo@v1
-  with:
-    command: install
-    args: cargo-deny
-- name: cargo-deny check licenses & bans
-  uses: actions-rs/cargo@v1
-  with:
-    command: deny
-    args: -L debug check all
-```
+### Collaboration Is Hard
+
+- Using open source is the easy part
+- Open sourcing your own stuff is hard
+- Contributing to others' code is even harder
+
+![gift](https://media.giphy.com/media/NQ3uhmwRUSTsI/giphy.gif)
+
+----
+
+### Zero/Negative Sum
+
+- Waste of Effort
+- Needs "Business case"
+- Best. Code. Ever.
+
+----
+
+### Disagree
+
+- Harder? Absolutely!
+- Worth it? [Often](https://github.com/EmbarkStudios/texture-synthesis/pull/14)!
+
+![moarspeed](moarspeed.png)
 
 ---
 
 ## Summary
 
+![condense](https://media.giphy.com/media/b3D3fQdQEZtC0/giphy.gif)
+
+----
+
+## Stats
+
+- Using ~411 crates in our main Rust project
+- Have [open sourced](https://embark.dev/) 9+ crates so far
+- Have contributed to dozens of crates
+- Helping sponsor and fund several projects/people
+
+----
+
+## Conclusion
+
 - Rust simplifies using and contributing to OS
-- Open source is a crucial reason to use Rust
-- Gamedev, Rust, and Open Source are a winning combo
+- Open source is one of Rust's selling points
+- Gamedev + Rust + Open Source = Fantastic
+- (Or even just [Gamedev and Open Source](https://medium.com/embarkstudios/itering-faster-with-open-source-76ae68f98745))
 
------
+----
 
-![pizza](https://media.giphy.com/media/OAbybHNIrqmqY/giphy.gif)
+![triforce](https://media.giphy.com/media/OAbybHNIrqmqY/giphy.gif)
