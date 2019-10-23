@@ -298,7 +298,7 @@ allow = [
 ### Finance
 
 - Easier to buy/license than use open source library/product
-- Papertrail, Agreements, Legal, etc
+- Papertrail, Support, Legal, etc
 
 ----
 
