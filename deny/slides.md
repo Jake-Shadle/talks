@@ -5,6 +5,7 @@ highlightTheme: atom-one-dark
 revealOptions:
   history: true
   transition: convex
+  totalTime: 1500
 ---
 
 ## cargo-deny
@@ -156,15 +157,26 @@ exceptions = [
 
 #### Evaluate
 
-![license_eval](license_eval.png)
+![license_eval](license-eval.png)
 
 Note: We parse and evaluate the SPDX license expression, using the configuration to determine the status of each license term in the expression.
+
+----
+
+#### Caveats
+
+- At the moment uses only 2 sources of input
+  - `license` field
+  - LICENSE(-*)? files in crate root
+- Relies on crate maintainers accurately stating license
+  - We have found this to be...not true for many crates using C
+- Also, as you know, we're not lawyers
 
 ---
 
 ### Bans
 
-![no](no.png)
+![no](no.gif)
 
 ----
 
@@ -211,3 +223,141 @@ deny = [
 ### Duplicates
 
 ![dupe](dupe.gif)
+
+----
+
+#### Cargo's Tradeoff
+
+- Dependency resolution is hard. As in NP-hard.
+- Cargo decided to avoid the problem
+
+![both](both.gif)
+
+----
+
+#### Pros ➕
+
+- Fast
+- Easy, particularly for new people
+- Ecosystem can evolve at differing paces
+
+Note: Since the ecosystem can evolve at different paces, this implicitly means
+that with enough dependencies, duplicates are essentially inevitable.
+
+----
+
+#### Cons ➖
+
+- More crates to download
+- More crates to compile & link
+- Larger outputs
+
+```bash
+error[E0308]: mismatched types
+    ...
+   = note: expected type `X` (struct `X`)
+              found type `X` (struct `X`)
+note: Perhaps two different versions of crate `thing` are being used?
+```
+
+----
+
+#### cargo-deny duplicate handling
+
+- allow/warn/deny duplicates in a project
+- Give concise inclusion graph for each version
+- Allow temporary skipping of certain versions
+
+----
+
+#### Configuration
+
+```ini
+[bans]
+multiple-versions = "deny"
+skip = [
+    # clap uses an older version of ansi_term
+    { name = "ansi_term", version = "=0.11.0" },
+}
+skip-tree = [
+    # ignore winit as it pulls in tons of older crates
+    { name = "winit", version = "=0.19" },
+]
+```
+
+----
+
+#### Command Output
+
+![dupes](dupes.png)
+
+----
+
+#### Graph Output w/ `-g`
+
+![graph](graph.png)
+
+----
+
+#### "Real" Graph Output
+
+![graph](proc-graph.png)
+
+----
+
+#### Decision Time
+
+- Do we care?
+- Should we open a PR?
+- Change our own versions to match?
+- Remove/replace one or more crates?
+
+----
+
+> Duplicate detection isn't about saying duplicates are bad, it's about surfacing them so you can decide yourself
+
+---
+
+### Advisories
+
+![security](security.gif)
+
+----
+
+#### Built On Top of rustsec
+
+- Made by people who know what they're doing
+- Same core functionality used by `cargo-audit`
+- Allows for **shared** knowledge
+
+----
+
+#### Not just vulnerabilities
+
+- Also has advisories for ummaintained crates
+- Detects crate versions that have been yanked
+- More in the future?
+
+----
+
+#### Configuration
+
+```ini
+[advisories]
+vulnerability = "deny"
+unmaintained = "deny"
+yanked = "deny"
+ignore = [
+    # spin is unmaintained, but it has a couple of heavy
+    # users, particularly lazy_static, which means it
+    # will take a while to ripple out into into all its users
+    "RUSTSEC-2019-0031",
+]
+```
+
+----
+
+![advisories](advisories.png)
+
+---
+
