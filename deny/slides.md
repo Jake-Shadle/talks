@@ -43,7 +43,7 @@ _of our own making_
 - Minimal external dependencies, vendored
 - Very little interaction with OSS
 
-Note: No external dependencies, no worries? Old, stale code. Inability to drive direction. NIH.
+Note: No external dependencies, no worries? Old, stale code. 5 year old Zlib. Inability to drive direction. NIH.
 
 ----
 
@@ -73,7 +73,7 @@ Note: We have been pretty good about breaking our old habits.
 - Some things are outside Cargo's domain
 - Maintain cadence over a long time
 
-Note: Manual inspection gets old. Rust and Cargo do a lot of heavy lifting, but they don't handle certain things for good reasons.
+Note: Manual inspection gets old. Rust and Cargo do a lot of heavy lifting, but they don't handle certain things for good reasons. In the future, we might start updating less frequently, or have fewer external dependencies, but for now we want to keep the pace we have.
 
 ---
 
@@ -172,7 +172,7 @@ Note: We parse and evaluate the SPDX license expression, using the configuration
 - At the moment uses only 2 sources of input
   - `license` field
   - LICENSE(-*)? files in crate root
-- Relies on crate maintainers accurately stating license
+- Relies on crate maintainers accurately stating licenses
   - We have found this to be...not true for many crates using C
 - Also, as you know, we're not lawyers
 
@@ -327,6 +327,7 @@ skip-tree = [
 - Should we open a PR?
 - Change our own versions to match?
 - Remove/replace one or more crates?
+- Toggle features?
 
 ----
 
@@ -343,7 +344,7 @@ skip-tree = [
 #### Built On Top of rustsec
 
 - Made by people who know what they're doing
-- Same core functionality used by `cargo-audit`
+- Similar core functionality as `cargo-audit`
 - Allows for **shared** knowledge
 
 ----
@@ -379,7 +380,7 @@ ignore = [
 
 ### Sources
 
-![source](source.gif)
+![source](sources.gif)
 
 ----
 
@@ -454,6 +455,7 @@ allow-git = [
 
 - Unused dependencies, à la [udeps](https://crates.io/crates/cargo-udeps)?
 - Proc macros, build.rs, executable files...?
+- Use cases and checks we haven't though of!
 
 ----
 
