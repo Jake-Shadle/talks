@@ -10,6 +10,8 @@ revealOptions:
 
 ## cargo-deny
 
+<image class="stretch" src="gardening.gif"/>
+
 ---
 
 ### Contents
@@ -28,6 +30,13 @@ revealOptions:
 - Vigil Games (middling) ☠️ (also THQ ☠️)
 - DICE/Frostbite (huge) 🖐
 - Embark Studios (small, but fierce) 🦀
+
+----
+
+![logo](logo-white.png)
+
+- Game development
+- Writing an engine/platform in Rust
 
 ---
 
@@ -52,6 +61,8 @@ Note: No external dependencies, no worries? Old, stale code. 5 year old Zlib. In
 - A big reason why many use Rust
 - Large (35k+) and growing fast
 - Huge spectrum on lots of axes
+
+![crates-io](crates-io.png)
 
 Note: The crate ecosystem is a huge reason we use Rust.
 
@@ -105,7 +116,7 @@ Note: Just as with linting done by clippy, we want to configure what we actually
 
 ### Licenses
 
-![license](license.gif)
+<image class="stretch" src="license.gif"/>
 
 ----
 
@@ -161,7 +172,7 @@ exceptions = [
 
 #### Evaluate
 
-![license_eval](license-eval.png)
+<image class="stretch" src="license-eval.png"/>
 
 Note: We parse and evaluate the SPDX license expression, using the configuration to determine the status of each license term in the expression.
 
@@ -172,15 +183,15 @@ Note: We parse and evaluate the SPDX license expression, using the configuration
 - At the moment uses only 2 sources of input
   - `license` field
   - LICENSE(-*)? files in crate root
-- Relies on crate maintainers accurately stating licenses
-  - We have found this to be...not true for many crates using C
+- Relies on maintainers accurately stating licenses
+  - Unfortunately, not true for some
 - Also, as you know, we're not lawyers
 
 ---
 
 ### Bans
 
-![no](no.gif)
+<image class="stretch" src="no.gif"/>
 
 ----
 
@@ -220,13 +231,13 @@ deny = [
  features = ["json", "rustls-tls"]
 ```
 
-![ban](ban.png)
+<image class="stretch" src="ban.png"/>
 
 ---
 
 ### Duplicates
 
-![dupe](dupe.gif)
+<image class="stretch" src="dupe.gif"/>
 
 ----
 
@@ -239,17 +250,17 @@ deny = [
 
 #### Easy Case
 
-![simple](simple.png)
+<image class="stretch" src="simple.png"/>
 
 ----
 
 #### Unsatisfiable Case
 
-![unsatisfiable](unsatisfiable.png)
+<image class="stretch" src="unsatisfiable.png"/>
 
 ----
 
-![both](both.gif)
+<image class="stretch" src="both.gif"/>
 
 ----
 
@@ -305,19 +316,19 @@ skip-tree = [
 
 ----
 
-![dupes](dupes.png)
+<image class="stretch" src="dupes.png"/>
 
 ----
 
 #### Graph Output w/ `-g`
 
-![graph](graph.png)
+<image class="stretch" src="graph.png"/>
 
 ----
 
 #### "Real" Graph Output
 
-![graph](proc-graph.png)
+<image class="stretch" src="proc-graph.png"/>
 
 ----
 
@@ -337,7 +348,7 @@ skip-tree = [
 
 ### Advisories
 
-![security](security.gif)
+<image class="stretch" src="security.gif"/>
 
 ----
 
@@ -374,19 +385,13 @@ ignore = [
 
 ----
 
-![advisories](advisories.png)
+<image class="stretch" src="advisories.png"/>
 
 ---
 
 ### Sources
 
-![source](sources.gif)
-
-----
-
-#### Initial Motivation
-
-[Why npm lockfiles can be a security blindspot for injecting malicious modules](https://snyk.io/blog/why-npm-lockfiles-can-be-a-security-blindspot-for-injecting-malicious-modules/)
+<image class="stretch" src="sources.gif"/>
 
 ----
 
@@ -398,11 +403,17 @@ ignore = [
 
 ----
 
+#### Initial Motivation
+
+[Why npm lockfiles can be a security blindspot for injecting malicious modules](https://snyk.io/blog/why-npm-lockfiles-can-be-a-security-blindspot-for-injecting-malicious-modules/)
+
+----
+
 ![lock-update](lock-update.png)
 
 ----
 
-![legit](legit.gif)
+<image class="stretch" src="legit.gif"/>
 
 ----
 
@@ -412,12 +423,12 @@ ignore = [
 -version = "1.1.0"
 +version = "1.2.0"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
-+source = "git+https://somewhere.com/definitely-not-mining-bitcoins?rev=c26f492"
++source = "git+https://git.com/definitely-not-mining-bitcoins?rev=c26f492"
 ```
 
 ----
 
-![suspicious](suspicious.gif)
+<image class="stretch" src="suspicious.gif"/>
 
 ----
 
@@ -441,13 +452,13 @@ allow-git = [
 
 ----
 
-![sources](sources.png)
+<image class="stretch" src="sources.png"/>
 
 ---
 
 ### Future
 
-![future](future.gif)
+<image class="stretch" src="future.gif"/>
 
 ----
 
@@ -464,3 +475,21 @@ allow-git = [
 [Cargo#7193](https://github.com/rust-lang/cargo/issues/7193) or similar would be great
 
 Note: cargo-deny can only lint **after** dependency resolution, having some way of hooking into dependency resolution would mean that at least some checks (eg licenses, advisories) could be used to ensure some crates/versions can't even be resolved.
+
+---
+
+### Action
+
+<image class="stretch" src="action.png"/>
+
+----
+
+### Links
+
+- cargo-deny - https://github.com/EmbarkStudios/cargo-deny
+- spdx - https://github.com/EmbarkStudios/spdx
+- krates - https://github.com/EmbarkStudios/krates
+- cfg-expr - https://github.com/EmbarkStudios/cfg-expr
+- cargo-audit - https://github.com/RustSec/cargo-audit
+- rustsec - https://github.com/RustSec/rustsec-crate
+- cargo-about - https://github.com/EmbarkStudios/cargo-about
