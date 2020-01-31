@@ -16,6 +16,8 @@ revealOptions:
 
 - The ~Problem~ Situation
 - Basic Idea of cargo-deny
+- Checks
+- Future
 
 ---
 
@@ -81,6 +83,16 @@ Note: Manual inspection gets old. Rust and Cargo do a lot of heavy lifting, but 
 
 ----
 
+#### Lint our crate graphs?
+
+- Treat crate graphs like code
+- Configure expectations
+- Automatically verify expectations
+
+Note: Just as with linting done by clippy, we want to configure what we actually want, then let our CI verify it continuously so that updating crates, adding new ones, changing features, etc, gives quick feedback to users and supports incremental change, rather than stagnation, or worse, chaos.
+
+----
+
 #### What to check?
 
 - Licenses
@@ -88,14 +100,6 @@ Note: Manual inspection gets old. Rust and Cargo do a lot of heavy lifting, but 
 - Duplicates
 - Advisories
 - Sources
-
-----
-
-#### Lint our crate graphs?
-
-- Treat crate graphs like code
-- Configure expectations
-- Automatically verify expectations
 
 ---
 
@@ -119,7 +123,7 @@ license = "MIT OR Apache-2.0" # SPDX license expression
 # license-file = "LICENSE" # File with license text
 ```
 
-Note: Cargo just exposes the metadata if the package supplies it, but that's about it
+Note: Cargo just exposes the metadata if the package supplies it, but that's about it, it's up to you to use that information in a way that suits you.
 
 ----
 
@@ -231,6 +235,20 @@ deny = [
 - Dependency resolution is hard. As in NP-hard.
 - Cargo decided to avoid the problem
 
+----
+
+#### Easy Case
+
+![simple](simple.png)
+
+----
+
+#### Unsatisfiable Case
+
+![unsatisfiable](unsatisfiable.png)
+
+----
+
 ![both](both.gif)
 
 ----
@@ -286,8 +304,6 @@ skip-tree = [
 ```
 
 ----
-
-#### Command Output
 
 ![dupes](dupes.png)
 
@@ -361,3 +377,88 @@ ignore = [
 
 ---
 
+### Sources
+
+![source](source.gif)
+
+----
+
+#### Initial Motivation
+
+[Why npm lockfiles can be a security blindspot for injecting malicious modules](https://snyk.io/blog/why-npm-lockfiles-can-be-a-security-blindspot-for-injecting-malicious-modules/)
+
+----
+
+#### Cargo Sources
+
+- Local
+- Registries
+- Git
+
+----
+
+![lock-update](lock-update.png)
+
+----
+
+![legit](legit.gif)
+
+----
+
+```diff
+ [[package]]
+ name = "smallvec"
+-version = "1.1.0"
++version = "1.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
++source = "git+https://somewhere.com/definitely-not-mining-bitcoins?rev=c26f492"
+```
+
+----
+
+![suspicious](suspicious.gif)
+
+----
+
+#### Configuration
+
+```ini
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-git = [
+    "https://github.com/EmbarkStudios/cpal",
+    "https://github.com/EmbarkStudios/nfd-rs",
+    "https://github.com/EmbarkStudios/winit",
+    #"https://github.com/EmbarkStudios/shaderc-rs",
+    "https://github.com/EmbarkStudios/sentry-rust",
+    "https://github.com/EmbarkStudios/imgui-rs",
+    "https://github.com/EmbarkStudios/keyring-rs",
+    "https://github.com/EmbarkStudios/vk-mem-rs",
+]
+```
+
+----
+
+![sources](sources.png)
+
+---
+
+### Future
+
+![future](future.gif)
+
+----
+
+#### More Checks?
+
+- Unused dependencies, à la [udeps](https://crates.io/crates/cargo-udeps)?
+- Proc macros, build.rs, executable files...?
+
+----
+
+#### Hooking Resolution
+
+[Cargo#7193](https://github.com/rust-lang/cargo/issues/7193) or similar would be great
+
+Note: cargo-deny can only lint **after** dependency resolution, having some way of hooking into dependency resolution would mean that at least some checks (eg licenses, advisories) could be used to ensure some crates/versions can't even be resolved.
