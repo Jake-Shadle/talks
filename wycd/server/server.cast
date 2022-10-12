@@ -1,0 +1,7 @@
+{"version": 2, "width": 87, "height": 31, "timestamp": 1665584689, "env": {"SHELL": "/usr/bin/zsh", "TERM": "alacritty"}, "title": "server"}
+[0.092357, "o", "\u001b[0m\u001b[0m\u001b[1m\u001b[32m    Finished\u001b[0m release [optimized] target(s) in 0.06s\r\n"]
+[0.093976, "o", "\u001b[0m\u001b[0m\u001b[1m\u001b[32m     Running\u001b[0m `target/release/server`\r\n"]
+[0.101679, "o", "\u001b[2m2022-10-12T14:24:49.199264Z\u001b[0m \u001b[34mDEBUG\u001b[0m \u001b[2mserver\u001b[0m\u001b[2m:\u001b[0m listening on 127.0.0.1:3000\r\n"]
+[1.828418, "o", "\u001b[2m2022-10-12T14:24:50.925938Z\u001b[0m \u001b[32m INFO\u001b[0m \u001b[2mserver\u001b[0m\u001b[2m:\u001b[0m received request for a 2560x1440 image (584429b)\r\n"]
+[29.508814, "o", "\u001b[2m2022-10-12T14:25:18.606361Z\u001b[0m \u001b[32m INFO\u001b[0m \u001b[2mserver\u001b[0m\u001b[2m:\u001b[0m generated!\r\n"]
+[30.448025, "o", "^C"]

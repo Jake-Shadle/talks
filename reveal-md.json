@@ -1,0 +1,11 @@
+{
+    "scripts": [
+        "lib/mermaid.min.js",
+        "lib/reveal-mermaid.js",
+        "lib/asciinema-player.min.js",
+        "lib/reveal-asciinema.js"
+    ],
+    "css": [
+        "css/asciinema-player.css"
+    ]
+}
